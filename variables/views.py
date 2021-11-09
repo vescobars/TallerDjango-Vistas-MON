@@ -2,32 +2,34 @@ from .logic import variables_logic as vl
 from django.http import HttpResponse
 from django.core import serializers
 import json
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def variables_view(request):
     if request.method == 'GET':
         id = request.GET.get("id", None)
         if id:
-            variable = vl.get_variable(id)
-            variable_dto = serializers.serialize('json', variable)
-            return HttpResponse(variable_dto, 'application/json')
+            variable_dto = vl.get_variable(id)
+            variable = serializers.serialize('json', [variable_dto,])
+            return HttpResponse(variable, 'application/json')
         else:
-            variables = vl.get_variables()
-            variables_dto = serializers.serialize('json', variables)
-            return HttpResponse(variables_dto, 'application/json')
+            variables_dto = vl.get_variables()
+            variables = serializers.serialize('json', variables_dto)
+            return HttpResponse(variables, 'application/json')
 
     if request.method == 'POST':
-        variable = vl.create_variable(request, json.loads(request.body))
-        variable_dto = serializers.serialize('json', variable)
-        return HttpResponse(variable_dto, 'application/json')
+        variable_dto = vl.create_variable(json.loads(request.body))
+        variable = serializers.serialize('json', [variable_dto,])
+        return HttpResponse(variable, 'application/json')
 
-
+@csrf_exempt
 def variable_view(request, pk):
     if request.method == 'GET':
-        variable = vl.get_variable(pk)
-        variable_dto = serializers.serialize('json', variable)
-        return HttpResponse(variable_dto, 'application/json')
+        variable_dto = vl.get_variable(pk)
+        variable = serializers.serialize('json', [variable_dto,])
+        return HttpResponse(variable, 'application/json')
 
     if request.method == 'PUT':
-        variable = vl.update_variable(pk)
-        variable_dto = serializers.serialize('json', variable)
-        return HttpResponse(variable_dto, 'application/json')
+        variable_dto = vl.update_variable(pk, json.loads(request.body))
+        variable = serializers.serialize('json', [variable_dto,])
+        return HttpResponse(variable, 'application/json')
