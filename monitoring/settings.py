@@ -76,13 +76,13 @@ WSGI_APPLICATION = 'monitoring.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
+     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": "prueba",
-        "USER": "prueba",
-        "PASSWORD": "prueba",
+        "NAME": "<nombrebd>",
+        "USER": "<usuario>",
+        "PASSWORD": "<clave>",
         "HOST": "localhost",
-        "PORT": "5432",
+        "PORT": "",
     }
 }
 
