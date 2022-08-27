@@ -18,8 +18,9 @@ from django.urls import path, include
 from django.contrib import admin
 from . import views
 
+# SI ALGO NO ESTA FUNCIONANDO REMOVER el path de la 25 que no aparece en la imagen del taller
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
+    path('home/', views.home),
     path('variables/', include('variables.urls')),
 ]
